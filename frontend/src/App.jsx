@@ -1,13 +1,35 @@
-import React from 'react';
+import React from "react";
+import HomeRoute from "./routes/HomeRoute";
+import PhotoDetailsModal from "./routes/PhotoDetailsModal";
+import PhotoFavButton from "components/PhotoFavButton";
+import "./App.scss";
+import useApplicationData from "./hooks/useApplicationData";
 
-import PhotoListItem from './components/PhotoListItem';
-import './App.scss';
-
-// Note: Rendering a single component to build components in isolation
 const App = () => {
+  const { state, togglePhotoDetailsInModal, toggleFavClick } =
+    useApplicationData();
+
+  const { photoDetailsInModal, isFavs } = state;
+
   return (
     <div className="App">
-      <PhotoListItem/>
+      <HomeRoute
+        photoData={photoData}
+        topicData={topicData}
+        setPhotoDetailsInModal={togglePhotoDetailsInModal}
+        isFavs={isFavs}
+        toggleFavClick={toggleFavClick}
+      />
+      {photoDetailsInModal && (
+        <PhotoDetailsModal
+          photo={photoDetailsInModal}
+          closePhotoDetailsModal={() => togglePhotoDetailsInModal(null)}
+          PhotoFavButton={PhotoFavButton}
+          isFavs={isFavs}
+          toggleFavClick={toggleFavClick}
+          setPhotoDetailsInModal={togglePhotoDetailsInModal}
+        />
+      )}
     </div>
   );
 };
