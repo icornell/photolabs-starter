@@ -1,16 +1,19 @@
-import React, { useCallback, useState } from 'react';
+import React from "react";
 
-import FavIcon from './FavIcon';
-import '../styles/PhotoFavButton.scss';
+import FavIcon from "./FavIcon";
+import "../styles/PhotoFavButton.scss";
 
-function PhotoFavButton() {
+const PhotoFavButton = ({isFavs, toggleFavClick, photoId}) => {
+  
+  const colourCheck = isFavs.includes(photoId);
+
   return (
-    <div className="photo-list__fav-icon">
-      <div className="photo-list__fav-icon-svg">
-        {/* Insert React */}
+    <div className="photo-list__fav-icon" onClick={()=>toggleFavClick(photoId)}>
+      <div className="photo-list__fav-icon-svg"> 
+        <FavIcon selected={colourCheck}/>
       </div>
     </div>
   );
-}
+};
 
 export default PhotoFavButton;
