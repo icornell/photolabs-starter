@@ -7,7 +7,7 @@ import "../styles/HomeRoute.scss";
 const HomeRoute = ({ isFavs, toggleFavClick, setPhotoDetailsInModal, state, photoData, topicData, handleTopicClick}) => {
   return (
     <div className="home-route">
-      <TopNavigationBar topics={topicData} isFavPhotoExist={isFavs.length > 0} handleTopicClick={handleTopicClick} />
+      <TopNavigationBar topicData={topicData} isFavPhotoExist={isFavs.length > 0} handleTopicClick={handleTopicClick} />
       <PhotoList
         photos={photoData}
         isFavs={isFavs}

@@ -7,6 +7,9 @@ const initialState = {
   topicData: [],
 };
 
+const photoData = [];
+const topicData = [];
+
 const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
@@ -17,6 +20,7 @@ const ACTIONS = {
 }
 
 function reducer(state, action) {
+  console.log(action);
   switch (action.type) {
     case ACTIONS.FAV_PHOTO_ADDED:
       return {
@@ -36,12 +40,12 @@ function reducer(state, action) {
     case ACTIONS.SET_PHOTO_DATA:
       return {
         ...state,
-        photoData: action.payload.photoData
+        photoData: action.payload
       };
     case ACTIONS.SET_TOPIC_DATA:
       return {
         ...state,
-        topicData: action.payload.topicData
+        topicData: action.payload
       };
       case ACTIONS.SELECT_TOPIC:
         return {
@@ -77,7 +81,7 @@ const useApplicationData = () => {
       method: 'GET'
     })
       .then((response) => response.json())
-      .then((photo) => dispatch({ type: actionTypes.setPhotoData, payload: photo }))
+      .then((photo) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: photo }))
       .catch((error) => {
         console.log(error);
       })
@@ -88,7 +92,7 @@ const useApplicationData = () => {
       method: 'GET'
     })
       .then(res => res.json())
-      .then(topic => dispatch({ type: actionTypes.setTopicData, payload: topic }))
+      .then(topic => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic }))
       .catch((error) => {
         console.log(error);
       })
@@ -99,12 +103,12 @@ const useApplicationData = () => {
       method: 'GET'
     })
       .then(res => res.json())
-      .then(topic => dispatch({ type: actionTypes.setTopicData, payload: topic }))
+      .then(topic => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic }))
       .catch((error) => {
         console.log(error);
       })
    }
-
+console.log(state);
   return {
     state,
     photoData,

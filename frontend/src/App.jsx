@@ -9,7 +9,7 @@ const App = () => {
   const { state, togglePhotoDetailsInModal, toggleFavClick } =
     useApplicationData();
 
-  const { photoDetailsInModal, isFavs } = state;
+  const { photoDetailsInModal, isFavs, photoData, topicData } = state;
 
   return (
     <div className="App">
