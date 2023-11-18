@@ -1,5 +1,14 @@
 import React, { useReducer, useEffect } from "react";
 
+const ACTIONS = {
+  FAV_PHOTO_ADDED: "FAV_PHOTO_ADDED",
+  FAV_PHOTO_REMOVED: "FAV_PHOTO_REMOVED",
+  SET_PHOTO_DATA: "SET_PHOTO_DATA",
+  SET_TOPIC_DATA: "SET_TOPIC_DATA",
+  SELECT_PHOTO: "SELECT_PHOTO",
+  DISPLAY_PHOTO_DETAILS: "DISPLAY_PHOTO_DETAILS",
+};
+
 const initialState = {
   photoDetailsInModal: null,
   isFavs: [],
@@ -7,35 +16,25 @@ const initialState = {
   topicData: [],
 };
 
-const photoData = [];
-const topicData = [];
-
-const ACTIONS = {
-  FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
-  FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
-  SET_PHOTO_DATA: 'SET_PHOTO_DATA',
-  SET_TOPIC_DATA: 'SET_TOPIC_DATA',
-  SELECT_PHOTO: 'SELECT_PHOTO',
-  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
-}
+// const photoData = [];
+// const topicData = [];
 
 function reducer(state, action) {
-  console.log(action);
   switch (action.type) {
     case ACTIONS.FAV_PHOTO_ADDED:
       return {
         ...state,
-        isFavs: [...state.isFavs, action.payload.id]
+        isFavs: [...state.isFavs, action.payload.id],
       };
     case ACTIONS.FAV_PHOTO_REMOVED:
       return {
         ...state,
-        isFavs: state.isFavs.filter(fav => fav !== action.payload.id)
+        isFavs: state.isFavs.filter((fav) => fav !== action.payload.id),
       };
     case ACTIONS.DISPLAY_PHOTO_DETAILS:
       return {
         ...state,
-        photoDetailsInModal: action.payload.photoDetailsInModal
+        photoDetailsInModal: action.payload.photoDetailsInModal,
       };
     case ACTIONS.SET_PHOTO_DATA:
       return {
@@ -47,25 +46,26 @@ function reducer(state, action) {
         ...state,
         topicData: action.payload
       };
-      case ACTIONS.SELECT_TOPIC:
-        return {
-          ...state,
-          selectedTopic: action.payload.selectedTopic
-        };
+    case ACTIONS.SELECT_TOPIC:
+      return {
+        ...state,
+        selectedTopic: action.payload.selectedTopic,
+      };
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
       );
   }
 }
+
 const useApplicationData = () => {
-  const [state, dispatch] = useReducer(reducer, {
-    photoDetailsInModal: null,
-    isFavs: [],
-  });
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const togglePhotoDetailsInModal = (photo) => {
-    dispatch({ type: ACTIONS.DISPLAY_PHOTO_DETAILS, payload: { photoDetailsInModal: photo } });
+    dispatch({
+      type: ACTIONS.DISPLAY_PHOTO_DETAILS,
+      payload: { photoDetailsInModal: photo },
+    });
   };
 
   const toggleFavClick = (photoId) => {
@@ -78,44 +78,52 @@ const useApplicationData = () => {
 
   useEffect(() => {
     fetch("/api/photos", {
-      method: 'GET'
+      method: "GET",
     })
       .then((response) => response.json())
-      .then((photo) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: photo }))
+      .then((photo) =>
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: photo })
+      )
       .catch((error) => {
         console.log(error);
-      })
+      });
   }, []);
 
   useEffect(() => {
     fetch(`/api/topics`, {
-      method: 'GET'
+      method: "GET",
     })
-      .then(res => res.json())
-      .then(topic => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic }))
+      .then((res) => res.json())
+      .then((topic) =>
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic })
+      )
       .catch((error) => {
         console.log(error);
-      })
-   }, [])
+      });
+  }, []);
 
-   const handleTopicClick = (topicId) => {
+  const handleTopicClick = (topicId) => {
     fetch(`/api/topics/${topicId}`, {
-      method: 'GET'
+      method: "GET",
     })
-      .then(res => res.json())
-      .then(topic => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic }))
+      .then((res) => res.json())
+      .then((topic) =>
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic })
+      )
       .catch((error) => {
         console.log(error);
-      })
-   }
-console.log(state);
+      });
+  };
+
   return {
     state,
-    photoData,
-    topicData,
     togglePhotoDetailsInModal,
     toggleFavClick,
     handleTopicClick,
+    photoDetailsInModal: state.photoDetailsInModal,
+    isFavs: state.isFavs,
+    photoData: state.photoData,
+    topicData: state.topicData,
   };
 };
 

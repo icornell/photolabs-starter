@@ -2,16 +2,18 @@ import React from "react";
 import PhotoListItem from "./PhotoListItem";
 
 import "../styles/PhotoList.scss";
+import photos from "mocks/photos";
 
 const PhotoList = ({
-  photos,
+  photoData,
   isFavs,
   toggleFavClick,
   setPhotoDetailsInModal,
 }) => {
+  console.log("test photolist", photoData);
   return (
     <ul className="photo-list">
-      {photos.map((photo, index) => {
+      {photoData && photoData.map((photo, index) => {
         return (
           <PhotoListItem
             className="photo-list:after"
