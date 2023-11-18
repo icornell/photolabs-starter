@@ -6,10 +6,8 @@ import useApplicationData from "./hooks/useApplicationData";
 import "./App.scss";
 
 const App = () => {
-  const { state, togglePhotoDetailsInModal, toggleFavClick, handleTopicClick } =
+  const { state, togglePhotoDetailsInModal, toggleFavClick, onTopicClick } =
     useApplicationData();
-console.log("in the app.jsx test: ", state.topicData);
-//  const { photoDetailsInModal, isFavs, photoData, topicData } = state;
   return (
     <div className="App">
       <HomeRoute
@@ -18,7 +16,7 @@ console.log("in the app.jsx test: ", state.topicData);
         setPhotoDetailsInModal={togglePhotoDetailsInModal}
         isFavs={state.isFavs}
         toggleFavClick={toggleFavClick}
-        handleTopicClick={handleTopicClick}
+        onTopicClick={onTopicClick}
       />
       {state.photoDetailsInModal && (
         <PhotoDetailsModal

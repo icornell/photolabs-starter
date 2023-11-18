@@ -4,10 +4,21 @@ import PhotoList from "../components/PhotoList";
 
 import "../styles/HomeRoute.scss";
 
-const HomeRoute = ({ isFavs, toggleFavClick, setPhotoDetailsInModal, photoData, topicData, handleTopicClick}) => {
+const HomeRoute = ({
+  isFavs,
+  toggleFavClick,
+  setPhotoDetailsInModal,
+  photoData,
+  topicData,
+  onTopicClick,
+}) => {
   return (
     <div className="home-route">
-      <TopNavigationBar topicData={topicData} isFavPhotoExist={isFavs.length > 0} handleTopicClick={handleTopicClick} />
+      <TopNavigationBar
+        topicData={topicData}
+        isFavPhotoExist={isFavs.length > 0}
+        onTopicClick={onTopicClick}
+      />
       <PhotoList
         photoData={photoData}
         isFavs={isFavs}

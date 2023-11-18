@@ -15,7 +15,6 @@ const PhotoDetailsModal = ({
   for (const similarPhoto in photo.similar_photos) {
     similarPhotos.push(photo.similar_photos[similarPhoto]);
   }
-
   return (
     <div className="photo-details-modal">
       <button
@@ -55,7 +54,7 @@ const PhotoDetailsModal = ({
       <div className="photo-details-modal__images">
         {
           <PhotoList
-            photos={similarPhotos}
+            photoData={similarPhotos}
             isFavs={isFavs}
             toggleFavClick={toggleFavClick}
             setPhotoDetailsInModal={setPhotoDetailsInModal}

@@ -16,9 +16,6 @@ const initialState = {
   topicData: [],
 };
 
-// const photoData = [];
-// const topicData = [];
-
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.FAV_PHOTO_ADDED:
@@ -39,17 +36,12 @@ function reducer(state, action) {
     case ACTIONS.SET_PHOTO_DATA:
       return {
         ...state,
-        photoData: action.payload
+        photoData: action.payload,
       };
     case ACTIONS.SET_TOPIC_DATA:
       return {
         ...state,
-        topicData: action.payload
-      };
-    case ACTIONS.SELECT_TOPIC:
-      return {
-        ...state,
-        selectedTopic: action.payload.selectedTopic,
+        topicData: action.payload,
       };
     default:
       throw new Error(
@@ -102,13 +94,11 @@ const useApplicationData = () => {
       });
   }, []);
 
-  const handleTopicClick = (topicId) => {
-    fetch(`/api/topics/${topicId}`, {
-      method: "GET",
-    })
+  const onTopicClick = (topicId) => {
+    fetch(`/api/topics/photos/${topicId}`)
       .then((res) => res.json())
       .then((topic) =>
-        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: topic })
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: topic })
       )
       .catch((error) => {
         console.log(error);
@@ -119,11 +109,7 @@ const useApplicationData = () => {
     state,
     togglePhotoDetailsInModal,
     toggleFavClick,
-    handleTopicClick,
-    photoDetailsInModal: state.photoDetailsInModal,
-    isFavs: state.isFavs,
-    photoData: state.photoData,
-    topicData: state.topicData,
+    onTopicClick,
   };
 };
 

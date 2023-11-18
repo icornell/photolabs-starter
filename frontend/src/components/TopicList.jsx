@@ -2,12 +2,16 @@ import React from "react";
 import TopicListItem from "./TopicListItem";
 import "../styles/TopicList.scss";
 
-const TopicList = ( {topicData, handleTopicClick} ) => {
-  console.log("test from topicList ", topicData);
+const TopicList = ({ topicData, onTopicClick }) => {
   return (
     <div className="top-nav-bar__topic-list">
-      {topicData.map((data) => (
-        <TopicListItem key={data.id} label={data.title} handleTopicClick={handleTopicClick}/>
+      {topicData.map((topic) => (
+        <TopicListItem
+          key={topic.id}
+          topicId={topic.id}
+          label={topic.title}
+          onTopicClick={onTopicClick}
+        />
       ))}
     </div>
   );
