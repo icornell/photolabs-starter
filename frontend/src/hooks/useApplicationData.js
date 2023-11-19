@@ -1,5 +1,6 @@
 import React, { useReducer, useEffect } from "react";
 
+//define the actions that will be used in the reducer below
 const ACTIONS = {
   FAV_PHOTO_ADDED: "FAV_PHOTO_ADDED",
   FAV_PHOTO_REMOVED: "FAV_PHOTO_REMOVED",
@@ -9,6 +10,7 @@ const ACTIONS = {
   DISPLAY_PHOTO_DETAILS: "DISPLAY_PHOTO_DETAILS",
 };
 
+//set the initial state to be an empty array or null as needed
 const initialState = {
   photoDetailsInModal: null,
   isFavs: [],
@@ -16,6 +18,7 @@ const initialState = {
   topicData: [],
 };
 
+//define the reducer function and how the actions will change the state
 function reducer(state, action) {
   switch (action.type) {
     case ACTIONS.FAV_PHOTO_ADDED:
@@ -52,8 +55,10 @@ function reducer(state, action) {
 
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
+//defined the functions that will be used in the components
 
   const togglePhotoDetailsInModal = (photo) => {
+    //toggle the modal to display the photo details
     dispatch({
       type: ACTIONS.DISPLAY_PHOTO_DETAILS,
       payload: { photoDetailsInModal: photo },
@@ -61,6 +66,7 @@ const useApplicationData = () => {
   };
 
   const toggleFavClick = (photoId) => {
+    //toggle the fav button to add or remove the photo from the favs array
     if (state.isFavs.includes(photoId)) {
       dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: { id: photoId } });
     } else {
@@ -69,6 +75,7 @@ const useApplicationData = () => {
   };
 
   useEffect(() => {
+    //fetch the photos from the database
     fetch("/api/photos", {
       method: "GET",
     })
@@ -82,6 +89,7 @@ const useApplicationData = () => {
   }, []);
 
   useEffect(() => {
+    //fetch the topics from the database
     fetch(`/api/topics`, {
       method: "GET",
     })
@@ -95,6 +103,7 @@ const useApplicationData = () => {
   }, []);
 
   const onTopicClick = (topicId) => {
+    //fetch the photos from the database that are associated with the topic and push them to the nav bar to select all photos by topics
     fetch(`/api/topics/photos/${topicId}`)
       .then((res) => res.json())
       .then((topic) =>

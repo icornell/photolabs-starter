@@ -11,6 +11,7 @@ const PhotoDetailsModal = ({
   toggleFavClick,
   setPhotoDetailsInModal,
 }) => {
+  //to get the similar photos from the photo object
   const similarPhotos = [];
   for (const similarPhoto in photo.similar_photos) {
     similarPhotos.push(photo.similar_photos[similarPhoto]);
@@ -25,6 +26,7 @@ const PhotoDetailsModal = ({
       </button>
       <div className="photo-details-modal__images">
         <PhotoFavButton
+          className="photo-details-modal__fav-button"
           isFavs={isFavs}
           toggleFavClick={toggleFavClick}
           photoId={photo.id}
@@ -54,7 +56,7 @@ const PhotoDetailsModal = ({
       <div className="photo-details-modal__images">
         {
           <PhotoList
-            photoData={similarPhotos}
+            photoData={similarPhotos} //replace the photoData with the similarPhotos to render in the modal
             isFavs={isFavs}
             toggleFavClick={toggleFavClick}
             setPhotoDetailsInModal={setPhotoDetailsInModal}
